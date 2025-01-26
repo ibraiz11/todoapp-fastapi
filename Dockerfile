@@ -1,15 +1,16 @@
-# Use Python 3.11 slim image
-FROM python:3.11-slim
+# Use Python 3.12 slim image
+FROM python:3.12-slim as python-base
+
+# Python configuration
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH="/app" \
+    PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100
 
 # Set working directory
 WORKDIR /app
-
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    POETRY_VERSION=1.7.1 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_CREATE=false
 
 # Install system dependencies
 RUN apt-get update \
@@ -19,18 +20,18 @@ RUN apt-get update \
         libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
-ENV PATH="${POETRY_HOME}/bin:$PATH"
+# Install uv
+RUN pip install uv
 
-# Copy poetry files
-COPY pyproject.toml poetry.lock ./
+# Copy requirements
+COPY requirements.txt .
+COPY requirements-dev.txt .
 
-# Install dependencies
-RUN poetry install --no-root --no-dev
+# Install dependencies using uv
+RUN uv pip install --system -r requirements.txt
 
 # Copy project files
 COPY . .
 
-# Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run the application with performance optimizations
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4", "--loop", "uvloop", "--http", "httptools"]
