@@ -25,7 +25,6 @@ lint:
 	ruff check .
 
 format:
-	black .
 	ruff format .
 
 clean:

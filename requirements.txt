@@ -1,5 +1,5 @@
 # FastAPI and Server
-fastapi==0.109.1
+fastapi>=0.109.0
 uvicorn[standard]==0.27.0
 python-multipart==0.0.6
 
@@ -47,3 +47,9 @@ prometheus-fastapi-instrumentator==6.1.0
 black==24.1.0
 isort==5.13.2
 flake8==7.0.0
+
+# AWS Lambda
+mangum>=0.17.0
+aws-cdk-lib>=2.124.0
+aws-cdk.aws-lambda>=2.124.0
+aws-cdk.aws-apigateway>=2.124.0

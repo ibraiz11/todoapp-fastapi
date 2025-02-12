@@ -73,6 +73,9 @@ class Settings(BaseSettings):
     AWS_SECRET_ACCESS_KEY: Optional[str] = None
     AWS_REGION: Optional[str] = None
     S3_BUCKET: Optional[str] = None
+
+    # Metrics
+    ENABLE_METRICS: bool = False
     
     @property
     def BASE_URL(self) -> str:

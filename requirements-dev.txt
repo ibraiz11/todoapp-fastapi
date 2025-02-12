@@ -13,3 +13,10 @@ mypy==1.14.1
 
 # Development Tools
 pre-commit==3.6.0
+
+# AWS CDK
+aws-cdk-lib>=2.124.0
+aws-cdk.aws-ec2>=2.124.0
+aws-cdk.aws-ecs>=2.124.0
+aws-cdk.aws-rds>=2.124.0
+aws-cdk.aws-secretsmanager>=2.124.0

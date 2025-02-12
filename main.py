@@ -13,7 +13,7 @@ from app.utils.logging import logging_middleware
 from app.utils.rate_limit import rate_limit_middleware
 from app.core.config import get_settings
 from app.core.logging import setup_logger
-from prometheus_fastapi_instrumentator import Instrumentator
+# from prometheus_fastapi_instrumentator import Instrumentator
 
 # Set up logging
 logger = setup_logger(__name__)
